@@ -22,18 +22,24 @@ pipeline {
             }
         }
 
-        stage('create docker image') {
+        stage('run') {
             steps {
-                script {
-                    docker_image = docker.build("${env.DOCKER_IMAGE}" , '-f ./Dockerfile .')
-                }
+                sh 'mvn spring-boot:run'
             }
         }
 
-        stage('RUN application container') {
-            steps {
-                sh "docker run -d -p 9092:9092 --name springBoot ${DOCKER_IMAGE}"
-            }
-        }
+//         stage('create docker image') {
+//             steps {
+//                 script {
+//                     docker_image = docker.build("${env.DOCKER_IMAGE}" , '-f ./Dockerfile .')
+//                 }
+//             }
+//         }
+
+//         stage('RUN application container') {
+//             steps {
+//                 sh "docker run -d -p 9092:9092 --name springBoot ${DOCKER_IMAGE}"
+//             }
+//         }
     }
 }
